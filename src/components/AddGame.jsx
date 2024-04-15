@@ -10,14 +10,13 @@ const AddGame = () => {
     97, 98, 99, 100,
   ];
 
-  const createOptions = () => {
-    numScores.map((num) => {
-      return (
-        <option key={num} value={num}>
-          {num}
-        </option>
-      );
-    });
+  let newGame = {
+    name: "",
+    img: "",
+    description: "",
+    steamScore: "",
+    criticScore: "",
+    hoursToBeat: "",
   };
 
   return (
@@ -32,6 +31,9 @@ const AddGame = () => {
             className="form-control"
             id="gameName"
             placeholder="Name of Game"
+            onChange={(event) => {
+              newGame.name = event.target.value;
+            }}
           />
         </div>
         <div className="col-md-6">
@@ -39,10 +41,14 @@ const AddGame = () => {
             Game Cover
           </label>
           <input
-            type="url"
+            type="text"
             className="form-control"
             id="gameImg"
             placeholder="Copy and Paste a URL of the Game Cover"
+            onChange={(event) => {
+              console.log(event.target.value);
+              newGame.img = event.target.value;
+            }}
           />
         </div>
         <div className="col-12">
@@ -54,14 +60,25 @@ const AddGame = () => {
             className="form-control"
             id="gameDescription"
             placeholder="Copy/Paste Game Description"
+            onChange={(event) => {
+              newGame.description = event.target.value;
+            }}
           />
         </div>
         <div className="col-md-3">
           <label htmlFor="steamScore" className="form-label">
             Please Enter Steam Score
           </label>
-          <select id="steamScore" className="form-select">
-            <option selected>Choose Steam Score...</option>
+          <select
+            id="steamScore"
+            className="form-select"
+            onChange={(event) => {
+              newGame.steamScore = event.target.value;
+            }}
+          >
+            <option defaultValue={"Choose Steam Score..."}>
+              Choose Steam Score...
+            </option>
             {numScores.map((num) => {
               return (
                 <option key={num} value={num}>
@@ -75,8 +92,16 @@ const AddGame = () => {
           <label htmlFor="metaCriticScore" className="form-label">
             Please Enter Metacritic Score
           </label>
-          <select id="metaCriticScore" className="form-select">
-            <option selected>Choose Metacritic Score...</option>
+          <select
+            id="metaCriticScore"
+            className="form-select"
+            onChange={(event) => {
+              newGame.criticScore = event.target.value;
+            }}
+          >
+            <option defaultValue={"Choose Metacritic Score..."}>
+              Choose Metacritic Score...
+            </option>
             {numScores.map((num) => {
               return (
                 <option key={num} value={num}>
@@ -91,8 +116,16 @@ const AddGame = () => {
           <label htmlFor="howLongToBeat" className="form-label">
             Please Length of Game
           </label>
-          <select id="howLongToBeat" className="form-select">
-            <option selected>How Long to Beat In Hours...</option>
+          <select
+            id="howLongToBeat"
+            className="form-select"
+            onChange={(event) => {
+              newGame.hoursToBeat = event.target.value;
+            }}
+          >
+            <option defaultValue={"How Long to Beat In Hours..."}>
+              How Long to Beat In Hours...
+            </option>
             {numScores.map((num) => {
               return (
                 <option key={num} value={num}>
@@ -103,7 +136,14 @@ const AddGame = () => {
           </select>
         </div>
         <div className="col-12">
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(newGame);
+            }}
+          >
             Submit Game
           </button>
         </div>

@@ -33,7 +33,7 @@ const GameAccordian = (props) => {
                   <h4>Tags</h4>
 
                   {props.tags.map((tag) => {
-                    return <div>{tag}</div>;
+                    return <div key={tag}>{tag}</div>;
                   })}
                 </div>
               </div>
