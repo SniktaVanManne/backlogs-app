@@ -4,6 +4,9 @@ import GameAccordian from "./components/GameAccordian";
 import AddGame from "./components/AddGame";
 import { useState } from "react";
 import "./App.css";
+import gameList from "./games";
+
+const games = gameList;
 
 function App() {
   const [isAdd, setIsAdd] = useState(false);
@@ -15,21 +18,29 @@ function App() {
   return (
     <div className="App">
       <Banner sendToApp={toggleBanner} />
-      {isAdd ? <AddGame /> : <GameAccordian />}
+      {isAdd ? (
+        <AddGame />
+      ) : (
+        <div>
+          {games.map((game) => {
+            return (
+              <GameAccordian
+                key={game.id}
+                name={game.name}
+                imgURL={game.imgURL}
+                description={game.description}
+                steamScore={game.steamScore}
+                criticScore={game.criticScore}
+                hoursToBeat={game.hoursToBeat}
+                tags={game.tags}
+              />
+            );
+          })}
+        </div>
+      )}
 
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
