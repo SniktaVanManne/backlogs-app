@@ -8,15 +8,13 @@ import "./App.css";
 function App() {
   const [isAdd, setIsAdd] = useState(false);
 
-  const bannerToApp = (bannerData) => {
+  const toggleBanner = (bannerData) => {
     setIsAdd(bannerData);
-    console.log("Hello");
-    console.log("Is Add In App: " + isAdd);
   };
 
   return (
     <div className="App">
-      <Banner onSendIsAdd={bannerToApp} />
+      <Banner sendToApp={toggleBanner} />
       {isAdd ? <AddGame /> : <GameAccordian />}
 
       <header className="App-header">

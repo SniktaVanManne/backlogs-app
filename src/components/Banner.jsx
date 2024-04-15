@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Banner.css";
 
 const Banner = (props) => {
@@ -15,33 +15,31 @@ const Banner = (props) => {
 
   const [isAdd, setIsAdd] = useState(false);
 
-  const goToList = () => {
-    setIsAdd(false);
-    console.log("Is Add: " + isAdd);
-
-    props.onSendIsAdd(isAdd);
-    console.log("Is Add: " + isAdd);
-  };
-
-  const goToForm = () => {
-    setIsAdd(true);
-    console.log("Is Add: " + isAdd);
-
-    props.onSendIsAdd(isAdd);
-    console.log("Is Add: " + isAdd);
-  };
+  useEffect(() => {
+    props.sendToApp(isAdd);
+  }, [isAdd]);
 
   return (
     <div className="Banner">
       <h1>Welcome to the Backlogs!</h1>
       <div className="container">
         <ul className="nav nav-pills">
-          <li className="nav-item" onClick={goToList}>
+          <li
+            className="nav-item"
+            onClick={() => {
+              setIsAdd(false);
+            }}
+          >
             <a className="nav-link active" aria-current="page" style={tabStyle}>
               What to Play Next
             </a>
           </li>
-          <li className="nav-item" onClick={goToForm}>
+          <li
+            className="nav-item"
+            onClick={() => {
+              setIsAdd(true);
+            }}
+          >
             <a className="nav-link active" aria-current="page" style={tabStyle}>
               Add a Game
             </a>
