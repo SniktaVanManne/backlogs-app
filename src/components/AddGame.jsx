@@ -11,17 +11,19 @@ const AddGame = () => {
   ];
 
   let newGame = {
-    name: "",
-    img: "",
-    description: "",
-    steamScore: "",
     criticScore: "",
+    description: "",
     hoursToBeat: "",
+    id: "",
+    imgURL: "",
+    name: "",
+    steamScore: "",
+    tags: [],
   };
 
   return (
     <div className="container">
-      <form className="row g-3">
+      <form className="row g-3" id="addGameForm">
         <div className="col-md-6">
           <label htmlFor="gameName" className="form-label">
             Name
@@ -46,8 +48,7 @@ const AddGame = () => {
             id="gameImg"
             placeholder="Copy and Paste a URL of the Game Cover"
             onChange={(event) => {
-              console.log(event.target.value);
-              newGame.img = event.target.value;
+              newGame.imgURL = event.target.value;
             }}
           />
         </div>
@@ -73,7 +74,7 @@ const AddGame = () => {
             id="steamScore"
             className="form-select"
             onChange={(event) => {
-              newGame.steamScore = event.target.value;
+              newGame.steamScore = Number(event.target.value);
             }}
           >
             <option defaultValue={"Choose Steam Score..."}>
@@ -96,7 +97,7 @@ const AddGame = () => {
             id="metaCriticScore"
             className="form-select"
             onChange={(event) => {
-              newGame.criticScore = event.target.value;
+              newGame.criticScore = Number(event.target.value);
             }}
           >
             <option defaultValue={"Choose Metacritic Score..."}>
@@ -120,7 +121,7 @@ const AddGame = () => {
             id="howLongToBeat"
             className="form-select"
             onChange={(event) => {
-              newGame.hoursToBeat = event.target.value;
+              newGame.hoursToBeat = Number(event.target.value);
             }}
           >
             <option defaultValue={"How Long to Beat In Hours..."}>
@@ -141,7 +142,28 @@ const AddGame = () => {
             className="btn btn-primary"
             onClick={(event) => {
               event.preventDefault();
-              console.log(newGame);
+              document.getElementById("addGameForm").reset();
+
+              let tempGameList = JSON.parse(localStorage.getItem("gamesList"));
+
+              newGame.id = tempGameList.length;
+
+              let flagged = false;
+
+              for (const [key, inputValue] of Object.entries(newGame)) {
+                if (flagged) {
+                  return;
+                } else {
+                  if (!inputValue) {
+                    alert(key + " cannot be blank");
+                    flagged = true;
+                  }
+                }
+              }
+
+              tempGameList.push(newGame);
+
+              localStorage.setItem("gamesList", JSON.stringify(tempGameList));
             }}
           >
             Submit Game
