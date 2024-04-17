@@ -5,7 +5,7 @@ import "./GameAccordian.css";
 const GameAccordian = (props) => {
   return (
     <div className="container">
-      <Accordion className="Accordian">
+      <Accordion className={props.style}>
         <Accordion.Item eventKey="0">
           <Accordion.Header>{props.name}</Accordion.Header>
           <Accordion.Body>
@@ -28,7 +28,11 @@ const GameAccordian = (props) => {
                   <p>{props.criticScore}</p>
                   <hr />
                   <h3>Hours to Beat</h3>
-                  <p>{props.hoursToBeat} Hours</p>
+                  {props.hoursToBeat > 100 ? (
+                    <p>{props.hoursToBeat}+ Hours</p>
+                  ) : (
+                    <p>{props.hoursToBeat} Hours</p>
+                  )}
                   <hr />
                   <h4>Tags</h4>
 

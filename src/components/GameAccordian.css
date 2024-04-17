@@ -1,5 +1,20 @@
 .Accordian {
-  border-radius: 0px 25px 15px;
+  border-radius: 0px 25px 0px 0px;
+  background: url(https://www.w3schools.com/css/paper.gif);
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 20px;
+}
+
+.AccordianMid {
+  background: url(https://www.w3schools.com/css/paper.gif);
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 20px;
+}
+
+.AccordianLast {
+  border-radius: 0px 0px 25px 15px;
   background: url(https://www.w3schools.com/css/paper.gif);
   background-position: left top;
   background-repeat: repeat;

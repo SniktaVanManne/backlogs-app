@@ -10,6 +10,15 @@ const AddGame = () => {
     97, 98, 99, 100,
   ];
 
+  const validatorHelp = {
+    criticScore: { name: "Open Critic Score", elementId: "metaCriticScore" },
+    description: { name: "Description", elementId: "gameDescription" },
+    hoursToBeat: { name: "Length in Hours", elementId: "howLongToBeat" },
+    imgURL: { name: "Game Image URL", elementId: "gameImg" },
+    name: { name: "Name of Game", elementId: "gameName" },
+    steamScore: { name: "Steam Score", elementId: "steamScore" },
+  };
+
   let newGame = {
     criticScore: "",
     description: "",
@@ -19,6 +28,7 @@ const AddGame = () => {
     name: "",
     steamScore: "",
     tags: [],
+    weightedScore: "",
   };
 
   return (
@@ -34,10 +44,12 @@ const AddGame = () => {
             id="gameName"
             placeholder="Name of Game"
             onChange={(event) => {
-              newGame.name = event.target.value;
+              event.target.style.backgroundColor = "white";
+              newGame.name = event.target.value.trim();
             }}
           />
         </div>
+        {/* TODO: Copy/Paste does not trigger OnChange */}
         <div className="col-md-6">
           <label htmlFor="gameImg" className="form-label">
             Game Cover
@@ -48,7 +60,8 @@ const AddGame = () => {
             id="gameImg"
             placeholder="Copy and Paste a URL of the Game Cover"
             onChange={(event) => {
-              newGame.imgURL = event.target.value;
+              event.target.style.backgroundColor = "white";
+              newGame.imgURL = event.target.value.trim();
             }}
           />
         </div>
@@ -62,7 +75,8 @@ const AddGame = () => {
             id="gameDescription"
             placeholder="Copy/Paste Game Description"
             onChange={(event) => {
-              newGame.description = event.target.value;
+              event.target.style.backgroundColor = "white";
+              newGame.description = event.target.value.trim();
             }}
           />
         </div>
@@ -74,6 +88,7 @@ const AddGame = () => {
             id="steamScore"
             className="form-select"
             onChange={(event) => {
+              event.target.style.backgroundColor = "white";
               newGame.steamScore = Number(event.target.value);
             }}
           >
@@ -82,8 +97,8 @@ const AddGame = () => {
             </option>
             {numScores.map((num) => {
               return (
-                <option key={num} value={num}>
-                  {num}
+                <option key={100 - num} value={100 - num}>
+                  {100 - num}
                 </option>
               );
             })}
@@ -97,6 +112,7 @@ const AddGame = () => {
             id="metaCriticScore"
             className="form-select"
             onChange={(event) => {
+              event.target.style.backgroundColor = "white";
               newGame.criticScore = Number(event.target.value);
             }}
           >
@@ -105,8 +121,8 @@ const AddGame = () => {
             </option>
             {numScores.map((num) => {
               return (
-                <option key={num} value={num}>
-                  {num}
+                <option key={100 - num} value={100 - num}>
+                  {100 - num}
                 </option>
               );
             })}
@@ -115,12 +131,13 @@ const AddGame = () => {
 
         <div className="col-md-3">
           <label htmlFor="howLongToBeat" className="form-label">
-            Please Length of Game
+            Please Enter Length of Game
           </label>
           <select
             id="howLongToBeat"
             className="form-select"
             onChange={(event) => {
+              event.target.style.backgroundColor = "white";
               newGame.hoursToBeat = Number(event.target.value);
             }}
           >
@@ -128,9 +145,13 @@ const AddGame = () => {
               How Long to Beat In Hours...
             </option>
             {numScores.map((num) => {
-              return (
-                <option key={num} value={num}>
-                  {num}
+              return num === 100 ? (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1}+
+                </option>
+              ) : (
+                <option key={num + 1} value={num + 1}>
+                  {num + 1}
                 </option>
               );
             })}
@@ -146,7 +167,13 @@ const AddGame = () => {
 
               let tempGameList = JSON.parse(localStorage.getItem("gamesList"));
 
-              newGame.id = tempGameList.length;
+              newGame.id =
+                newGame.name.replace(/\s/g, "") +
+                tempGameList.length +
+                Math.floor(10 * Math.random());
+
+              // TODO: Add ability to Choose Tags
+              newGame.tags = ["Game", "Good", "Fun"];
 
               let flagged = false;
 
@@ -155,7 +182,10 @@ const AddGame = () => {
                   return;
                 } else {
                   if (!inputValue) {
-                    alert(key + " cannot be blank");
+                    alert(validatorHelp[key].name + " Cannot Be Blank");
+                    document.getElementById(
+                      validatorHelp[key].elementId
+                    ).style.backgroundColor = "pink";
                     flagged = true;
                   }
                 }
