@@ -1,19 +1,40 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
 import "./GameAccordian.css";
+import deleteIcon from "../imgs/delete.png";
 
 const GameAccordian = (props) => {
+  const removeGame = () => {
+    if (window.confirm(`This will remove ${props.name} from your backlog`)) {
+      let tempGamesList = JSON.parse(localStorage.getItem("gamesList"));
+
+      tempGamesList = tempGamesList.filter((game) => {
+        return game.id !== props.id;
+      });
+
+      localStorage.setItem("gamesList", JSON.stringify(tempGamesList));
+
+      props.gameRemoved(tempGamesList.length);
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className="container">
       <Accordion className={props.style}>
-        <Accordion.Item eventKey="0">
+        <Accordion.Item eventKey={props.id}>
           <Accordion.Header>{props.name}</Accordion.Header>
           <Accordion.Body>
             <div className="container">
               <div className="row">
                 <div className="col">
                   <img
-                    style={{ borderRadius: "5%", marginTop: "50px" }}
+                    style={{
+                      borderRadius: "5%",
+                      marginTop: "50px",
+                      width: "230px",
+                    }}
                     src={props.imgURL}
                   />
                 </div>
@@ -40,6 +61,24 @@ const GameAccordian = (props) => {
                     return <div key={tag}>{tag}</div>;
                   })}
                 </div>
+              </div>
+              <div className="row">
+                <div
+                  className="col-1 RemoveButton"
+                  style={{ width: "30px", padding: "0px" }}
+                  onClick={removeGame}
+                >
+                  <img
+                    style={{
+                      width: "20px",
+                      paddingBottom: "3px",
+                      alignItems: "left",
+                    }}
+                    src={deleteIcon}
+                    alt="Image of Trash Can to Signify Delete Action"
+                  ></img>
+                </div>
+                <div className="col-10"></div>
               </div>
             </div>
           </Accordion.Body>

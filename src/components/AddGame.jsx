@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AddGame = () => {
   const numScores = [
@@ -31,6 +31,8 @@ const AddGame = () => {
     weightedScore: "",
   };
 
+  const [gameAdded, setGameAdded] = useState(false);
+
   return (
     <div className="container">
       <form className="row g-3" id="addGameForm">
@@ -43,7 +45,7 @@ const AddGame = () => {
             className="form-control"
             id="gameName"
             placeholder="Name of Game"
-            onChange={(event) => {
+            onBlur={(event) => {
               event.target.style.backgroundColor = "white";
               newGame.name = event.target.value.trim();
             }}
@@ -59,7 +61,7 @@ const AddGame = () => {
             className="form-control"
             id="gameImg"
             placeholder="Copy and Paste a URL of the Game Cover"
-            onChange={(event) => {
+            onBlur={(event) => {
               event.target.style.backgroundColor = "white";
               newGame.imgURL = event.target.value.trim();
             }}
@@ -74,7 +76,7 @@ const AddGame = () => {
             className="form-control"
             id="gameDescription"
             placeholder="Copy/Paste Game Description"
-            onChange={(event) => {
+            onBlur={(event) => {
               event.target.style.backgroundColor = "white";
               newGame.description = event.target.value.trim();
             }}
@@ -165,7 +167,9 @@ const AddGame = () => {
               event.preventDefault();
               document.getElementById("addGameForm").reset();
 
-              let tempGameList = JSON.parse(localStorage.getItem("gamesList"));
+              let tempGameList = localStorage.getItem("gamesList")
+                ? JSON.parse(localStorage.getItem("gamesList"))
+                : [];
 
               newGame.id =
                 newGame.name.replace(/\s/g, "") +
@@ -175,6 +179,8 @@ const AddGame = () => {
               // TODO: Add ability to Choose Tags
               newGame.tags = ["Game", "Good", "Fun"];
 
+              newGame.weightedScore = newGame.criticScore * newGame.steamScore;
+
               let flagged = false;
 
               for (const [key, inputValue] of Object.entries(newGame)) {
@@ -183,6 +189,7 @@ const AddGame = () => {
                 } else {
                   if (!inputValue) {
                     alert(validatorHelp[key].name + " Cannot Be Blank");
+
                     document.getElementById(
                       validatorHelp[key].elementId
                     ).style.backgroundColor = "pink";

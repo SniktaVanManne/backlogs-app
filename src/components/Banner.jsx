@@ -15,25 +15,12 @@ const Banner = (props) => {
 
   const [isAdd, setIsAdd] = useState(false);
 
-  const soma = {
-    id: 0,
-    name: "Soma",
-    imgURL:
-      "https://cdn.cloudflare.steamstatic.com/steam/apps/282140/header.jpg?t=1685698900",
-    description: "Catherine? Catherine ... don't leave me alone ...",
-    criticScore: 83,
-    steamScore: 95,
-    hoursToBeat: 9,
-    tags: ["Horror", "Thriller", "First Person", "Story-Rich", "Psychological"],
-  };
-
   useEffect(() => {
     props.sendToApp(isAdd);
   }, [isAdd]);
 
   return (
     <div className="Banner">
-      <h1>Welcome to the Backlogs!</h1>
       <div className="container">
         <ul className="nav nav-pills">
           <li
@@ -56,10 +43,37 @@ const Banner = (props) => {
               Add a Game
             </a>
           </li>
+
           <li
             className="nav-item"
             onClick={() => {
-              let tempGameList = [];
+              let tempGameList = localStorage.getItem("gamesList")
+                ? JSON.parse(localStorage.getItem("gamesList"))
+                : [];
+
+              let soma = {
+                id:
+                  "Soma" + tempGameList.length + Math.floor(10 * Math.random()),
+                name:
+                  "Soma" + tempGameList.length + Math.floor(10 * Math.random()),
+                imgURL:
+                  "https://cdn.cloudflare.steamstatic.com/steam/apps/282140/header.jpg?t=1685698900",
+                description:
+                  "Catherine? Catherine ... don't leave me alone ...",
+                criticScore: Math.floor(100 * Math.random() + 1),
+                steamScore: Math.floor(100 * Math.random() + 1),
+                hoursToBeat: Math.floor(100 * Math.random() + 1),
+                weightedScore: null,
+                tags: [
+                  "Horror",
+                  "Thriller",
+                  "First Person",
+                  "Story-Rich",
+                  "Psychological",
+                ],
+              };
+
+              soma.weightedScore = soma.steamScore * soma.criticScore;
 
               tempGameList.push(soma);
 
