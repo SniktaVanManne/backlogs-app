@@ -201,6 +201,8 @@ const AddGame = () => {
               tempGameList.push(newGame);
 
               localStorage.setItem("gamesList", JSON.stringify(tempGameList));
+              //TODO Update to Modal
+              Window.alert(newGame.name + " Added to Your List!");
             }}
           >
             Submit Game

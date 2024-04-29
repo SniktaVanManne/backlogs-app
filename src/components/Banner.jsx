@@ -13,7 +13,7 @@ const Banner = (props) => {
     borderStyle: "solid",
   };
 
-  const [isAdd, setIsAdd] = useState(false);
+  const [isAdd, setIsAdd] = useState("view");
 
   useEffect(() => {
     props.sendToApp(isAdd);
@@ -26,7 +26,7 @@ const Banner = (props) => {
           <li
             className="nav-item"
             onClick={() => {
-              setIsAdd(false);
+              setIsAdd("view");
             }}
           >
             <a className="nav-link active" aria-current="page" style={tabStyle}>
@@ -36,7 +36,17 @@ const Banner = (props) => {
           <li
             className="nav-item"
             onClick={() => {
-              setIsAdd(true);
+              setIsAdd("search");
+            }}
+          >
+            <a className="nav-link active" aria-current="page" style={tabStyle}>
+              Search Games
+            </a>
+          </li>
+          <li
+            className="nav-item"
+            onClick={() => {
+              setIsAdd("add");
             }}
           >
             <a className="nav-link active" aria-current="page" style={tabStyle}>
@@ -44,7 +54,7 @@ const Banner = (props) => {
             </a>
           </li>
 
-          <li
+          {/* <li
             className="nav-item"
             onClick={() => {
               let tempGameList = localStorage.getItem("gamesList")
@@ -87,7 +97,7 @@ const Banner = (props) => {
             <a className="nav-link active" aria-current="page" style={tabStyle}>
               Add Soma
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

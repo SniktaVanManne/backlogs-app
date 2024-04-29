@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import "./GameAccordian.css";
 import deleteIcon from "../imgs/delete.png";
 
 const GameAccordian = (props) => {
+  const [lengthInHours, setLengthInHours] = useState();
+
   const removeGame = () => {
     if (window.confirm(`This will remove ${props.name} from your backlog`)) {
       let tempGamesList = JSON.parse(localStorage.getItem("gamesList"));
@@ -18,6 +20,10 @@ const GameAccordian = (props) => {
     } else {
       return;
     }
+  };
+
+  const updateHours = (id, length) => {
+    props.onUpdateHours([id, length]);
   };
 
   return (
@@ -44,7 +50,20 @@ const GameAccordian = (props) => {
                 </div>
                 <div className="col">
                   <h2 style={{ marginTop: "50px" }}>Steam</h2>
-                  <p>{props.steamScore}</p>
+                  <p>{Math.round(props.steamScore)}%</p>
+                  {Math.round(props.steamScore) > 94 ? (
+                    <p>Overwhelming Positive</p>
+                  ) : Math.round(props.steamScore) > 80 ? (
+                    <p>Very Positive</p>
+                  ) : Math.round(props.steamScore) > 70 ? (
+                    <p>Mostly Positive</p>
+                  ) : Math.round(props.steamScore) > 40 ? (
+                    <p>Mixed</p>
+                  ) : Math.round(props.steamScore) > 20 ? (
+                    <p>Mostly Negative</p>
+                  ) : (
+                    <p>Very Negative</p>
+                  )}
                   <h2>MetaCritic</h2>
                   <p>{props.criticScore}</p>
                   <hr />
@@ -54,11 +73,59 @@ const GameAccordian = (props) => {
                   ) : (
                     <p>{props.hoursToBeat} Hours</p>
                   )}
+                  <input
+                    type="number"
+                    id="hoursToBeat"
+                    onBlur={(event) => {
+                      setLengthInHours(event.target.value);
+                    }}
+                  ></input>
+                  <button
+                    onClick={() => {
+                      let tempGameList = JSON.parse(
+                        localStorage.getItem("gamesList")
+                      );
+
+                      let tempGame;
+
+                      tempGame = tempGameList.filter((game) => {
+                        return game.id === props.id;
+                      });
+
+                      tempGame.hoursToBeat =
+                        document.getElementById("hoursToBeat").value;
+
+                      tempGameList.map((game) => {
+                        if (game.id === props.id) {
+                          game.criticScore = props.criticScore;
+                          game.description = props.description;
+                          game.hoursToBeat = lengthInHours;
+                          game.id = props.id;
+                          game.imgURL = props.imgURL;
+                          game.name = props.name;
+                          game.steamScore = props.steamScore;
+                          game.tags = props.tags;
+                          game.weightedScore = props.weightedScore;
+                        } else {
+                          return;
+                        }
+                      });
+
+                      localStorage.setItem(
+                        "gamesList",
+                        JSON.stringify(tempGameList)
+                      );
+
+                      updateHours(props.id, props.hoursToBeat);
+                    }}
+                  >
+                    Enter Hours to Beat
+                  </button>
                   <hr />
                   <h4>Tags</h4>
 
                   {props.tags.map((tag) => {
-                    return <div key={tag}>{tag}</div>;
+                    return <div key={tag.id}>{tag.name}</div>;
                   })}
                 </div>
               </div>

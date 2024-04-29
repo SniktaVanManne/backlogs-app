@@ -4,6 +4,7 @@ import GameAccordian from "./components/GameAccordian";
 import UnopenAccordian from "./components/UnopenAccordian";
 import AddGame from "./components/AddGame";
 import SortGames from "./components/SortGames";
+import SearchGame from "./components/SearchGame";
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -14,17 +15,22 @@ function App() {
       : [];
   };
 
-  const [isAdd, setIsAdd] = useState(false);
+  const [bannerSection, setBannerSection] = useState("add");
   const [sortBy, setSortBy] = useState("default");
   const [listChanged, setListChanged] = useState();
+  const [listUpdated, setListUpdated] = useState();
   const [games, setGames] = useState(checkGameList());
 
   const toggleBanner = (bannerData) => {
-    setIsAdd(bannerData);
+    setBannerSection(bannerData);
   };
 
   const listChange = (removedData) => {
     setListChanged(removedData);
+  };
+
+  const hoursUpdate = (hoursData) => {
+    setListUpdated(hoursData);
   };
 
   const sortList = (sortGamesData) => {
@@ -37,23 +43,24 @@ function App() {
     },
     [localStorage.getItem("gamesList")],
     listChanged,
-    sortBy
+    sortBy,
+    listUpdated
   );
 
   return (
     <div className="App">
       <h1 style={{ color: "#e6ffff" }}>Welcome to the Backlogs!</h1>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col-2">
+          <div className="col-3">
             <SortGames sendToApp={sortList} />
           </div>
 
-          <div className="col-10">
+          <div className="col-7">
             <Banner sendToApp={toggleBanner} />
-            {isAdd ? (
+            {bannerSection === "add" ? (
               <AddGame />
-            ) : (
+            ) : bannerSection === "view" ? (
               <div>
                 {games.length < 1 && (
                   <UnopenAccordian
@@ -68,6 +75,7 @@ function App() {
                     <GameAccordian
                       key={game.id}
                       id={game.id}
+                      position={index}
                       style={
                         index === 0
                           ? "Accordian"
@@ -81,12 +89,18 @@ function App() {
                       steamScore={game.steamScore}
                       criticScore={game.criticScore}
                       hoursToBeat={game.hoursToBeat}
+                      weightedScore={game.weightedScore}
                       tags={game.tags}
                       gameRemoved={listChange}
+                      onUpdateHours={hoursUpdate}
                     />
                   );
                 })}
               </div>
+            ) : bannerSection === "search" ? (
+              <SearchGame />
+            ) : (
+              <div />
             )}
           </div>
         </div>
