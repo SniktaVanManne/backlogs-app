@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Make sure to run npm i- to ensure you have all the dependecies 
 
 ## Available Scripts
 
@@ -14,57 +14,35 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+### `Search Games`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once inside the app you can search for games to add them to your backlog. 
+At this point, Hours to Beat needs to be manually updated as their are no public free
+APIs that share this data. 
 
-### `npm run build`
+### `Add Games`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+If for whatever reason a game does not appear in the search or cannot be added, 
+you can manually add the game to your Backlog by filling out the form under Add Games. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `What to Play Next`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This section shows your Backlog. The Default List is the order in which you added your games. 
 
-### `npm run eject`
+You can organize your Backlog alphabetically or reverse alphabetically with the 'Organize A-Z' Button. 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The 'Organize Backlogs' Button will organize your Backlog based on Critic and Recommended Scores as well as 
+how long it takes to beat each a game. This default Organize Button prioritizes shorter game lengths so you 
+can finish the most games quicker. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You can also organize your Backlog with a preference for game length. This prioritization still takes Critic and Recommend Scores
+into account, but also puts a large emphasis on Hours to Beat, prioritizing the hours you selected. 
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This is the MVP (Minimal Viable Product). Future editions will include 
+- Visual UI updates
+- Automatic extraction of 'Hours to Beat' variable
+- Atomized Hours to Beat preference under 'Recommend' Button
+- Ability to add Genre/Tag preferences to how the games are organized
+- More! 
